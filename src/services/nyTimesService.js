@@ -1,10 +1,10 @@
 import axios from "axios";
 const BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-const getApiKey = import.meta.env.VITE_NYTIMES_API_KEY;
+const NYTIMES_API_KEY = import.meta.env.VITE_NYTIMES_API_KEY;
 
-const buildParams = (query, date, category, apiKey) => ({
+const buildParams = (query, date, category, NYTIMES_API_KEY) => ({
   q: query || "",
-  "api-key": apiKey,
+  "api-key": NYTIMES_API_KEY,
   ...(date && { begin_date: date.replace(/-/g, "") }),
   ...(category && { fq: `news_desk:("${category}")` }),
 });
@@ -22,25 +22,23 @@ const mapArticle = (item) => ({
 });
 
 export const fetchNYTimesArticles = async (query, date, category) => {
-  const apiKey = getApiKey();
-  if (!apiKey) {
+  if (!NYTIMES_API_KEY) {
     console.error("NY Times API key is missing. Please check your .env file.");
     return [];
   }
 
   try {
     const response = await axios.get(BASE_URL, {
-      params: buildParams(query, date, category, apiKey),
+      params: buildParams(query, date, category, NYTIMES_API_KEY),
     });
-    console.log("NY Times Response:", response.data);
     return response.data.response.docs.map(mapArticle);
   } catch (error) {
     if (error.response) {
       console.error(
-        `Error fetching NY Times articles: ${error.response.status} - ${error.response.statusText}`
+        `Error fetching NY Times articles: ${error?.response?.status} - ${error?.response?.statusText}`
       );
     } else {
-      console.error("Error fetching NY Times articles:", error.message);
+      console.error("Error fetching NY Times articles:", error?.message);
     }
     return [];
   }

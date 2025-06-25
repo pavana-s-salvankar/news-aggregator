@@ -30,7 +30,7 @@ export const fetchNewsAPIArticles = async (query = "", date, category = "") => {
   } catch (error) {
     console.error(
       "Error fetching NewsAPI articles:",
-      error.response?.data || error.message
+      error?.response?.data || error?.message
     );
     return [];
   }
