@@ -1,2 +1,3 @@
 # news-aggregator
-frontend challenge by Innoscripta
+frontend challenge by 
+
