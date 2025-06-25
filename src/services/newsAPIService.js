@@ -1,42 +1,37 @@
 import axios from "axios";
 
 const BASE_URL = "https://newsapi.org/v2/top-headlines";
+const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 
-export const fetchNewsAPIArticles = async (query, date, category) => {
-  const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
-
+export const fetchNewsAPIArticles = async (query = "", date, category = "") => {
   try {
-    const response = await axios.get(BASE_URL, {
-      params: {
-        q: query || "",
-        category: category || "",
-        apiKey: NEWS_API_KEY,
-        language: "en",
-        ...(date && { from: date }),
-      },
-    });
+    const params = {
+      q: query,
+      category,
+      apiKey: NEWS_API_KEY,
+      language: "en",
+      ...(date && { from: date }),
+    };
 
-    console.log("NewsAPI Response:", response.data);
+    const { data } = await axios.get(BASE_URL, { params });
 
-    if (response.data.status === "ok" && response.data.articles.length > 0) {
-      return response.data.articles.map((item) => ({
-        title: item.title,
-        description: item.description,
-        url: item.url,
-        imageUrl: item.urlToImage,
-        publishedAt: item.publishedAt,
-        source: item.source.name,
+    if (data.status === "ok" && Array.isArray(data.articles) && data.articles.length) {
+      return data.articles.map(({ title, description, url, urlToImage, publishedAt, source }) => ({
+        title,
+        description,
+        url,
+        imageUrl: urlToImage,
+        publishedAt,
+        source: source?.name,
       }));
-    } else {
-      console.warn(
-        "No articles found for the provided query, date, or category."
-      );
-      return [];
     }
+
+    console.warn("No articles found for the provided query, date, or category.");
+    return [];
   } catch (error) {
     console.error(
       "Error fetching NewsAPI articles:",
-      error.response ? error.response.data : error.message
+      error.response?.data || error.message
     );
     return [];
   }

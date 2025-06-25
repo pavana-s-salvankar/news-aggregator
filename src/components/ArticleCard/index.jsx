@@ -1,22 +1,38 @@
 import defaultPlaceholderImage from "../../assets/images/default-placeholder-image-url.png";
 import "./index.css";
 
-const ArticleCard = ({article }) => {
-  const { imageUrl, title, description, source, url, publishedAt } = article;
+const ArticleCard = ({ article }) => {
+  if (!article) return null;
+
+  const {
+    imageUrl,
+    title,
+    description,
+    source,
+    url,
+    publishedAt,
+  } = article;
+
+  const formattedDate = publishedAt
+    ? new Date(publishedAt).toLocaleDateString()
+    : "Unknown date";
+
   return (
     <div className="article-card">
       <img
         src={imageUrl || defaultPlaceholderImage}
         className="article-image"
-        alt=""
+        alt={title || "Article"}
       />
-       <p>Published on {new Date(publishedAt).toLocaleDateString()}</p>
+      <p>Published on {formattedDate}</p>
       <h3>{title}</h3>
       {description && <p>{description}</p>}
-      <p>Source: {source}</p>
-      <a href={url} target="_blank" rel="noopener noreferrer">
-        Read More
-      </a>
+      <p>Source: {source || "Unknown"}</p>
+      {url && (
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          Read More
+        </a>
+      )}
     </div>
   );
 };

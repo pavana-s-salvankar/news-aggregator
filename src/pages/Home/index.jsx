@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import SearchBar from "../../components/SearchBar";
+import { useEffect, useState } from "react";
 import ArticleCard from "../../components/ArticleCard";
-import { fetchNewsAPIArticles } from "../../services/newsAPIService";
+import SearchBar from "../../components/SearchBar";
 import { fetchGuardianArticles } from "../../services/guardianService";
+import { fetchNewsAPIArticles } from "../../services/newsAPIService";
 import { fetchNYTimesArticles } from "../../services/nyTimesService";
 import "./index.css";
 
-const Home = () => {  
-  const [aticles,setArticles] =useState([]);
-  const [loading, setLoading] = useState(false); // Loading state
+const Home = () => {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState({
     query: "",
     date: "",
@@ -20,44 +20,29 @@ const Home = () => {
     const fetchArticles = async () => {
       setLoading(true);
       try {
-        let articles = [];
-        if (filters.source === "newsapi") {
-          articles = await fetchNewsAPIArticles(
-        filters.query,
-        filters.date,
-        filters.category
-          );
-        } else if (filters.source === "guardian") {
-          articles = await fetchGuardianArticles(
-        filters.query,
-        filters.date,
-        filters.category
-          );
-        } else if (filters.source === "nytimes") {
-          articles = await fetchNYTimesArticles(
-        filters.query,
-        filters.date,
-        filters.category
-          );
-        } else {
-          const newsArticles = await fetchNewsAPIArticles(
-        filters.query,
-        filters.date,
-        filters.category
-          );
-          const guardianArticles = await fetchGuardianArticles(
-        filters.query,
-        filters.date,
-        filters.category
-          );
-          const nyTimesArticles = await fetchNYTimesArticles(
-        filters.query,
-        filters.date,
-        filters.category
-          );
-          articles = [...newsArticles, ...guardianArticles, ...nyTimesArticles];
+        let fetchedArticles = [];
+        const { query, date, category, source } = filters;
+
+        switch (source) {
+          case "newsapi":
+            fetchedArticles = await fetchNewsAPIArticles(query, date, category);
+            break;
+          case "guardian":
+            fetchedArticles = await fetchGuardianArticles(query, date, category);
+            break;
+          case "nytimes":
+            fetchedArticles = await fetchNYTimesArticles(query, date, category);
+            break;
+          default:
+            const [news, guardian, nytimes] = await Promise.all([
+              fetchNewsAPIArticles(query, date, category),
+              fetchGuardianArticles(query, date, category),
+              fetchNYTimesArticles(query, date, category),
+            ]);
+            fetchedArticles = [...news, ...guardian, ...nytimes];
         }
-        setArticles(articles);
+
+        setArticles(fetchedArticles);
       } catch (error) {
         console.error("Error fetching articles:", error);
       } finally {
@@ -65,9 +50,8 @@ const Home = () => {
       }
     };
 
-    fetchArticles(); // Fetch articles on component mount and whenever filters change
+    fetchArticles();
   }, [filters]);
-  
 
   const handleSearch = (searchParams) => {
     setFilters(searchParams);
@@ -82,16 +66,15 @@ const Home = () => {
         </div>
       ) : (
         <div className="article-sections">
-  
-            <div className="article-list">
-              {aticles.length > 0 ? (
-                aticles.map((article, index) => (
-                  <ArticleCard key={index} article={article} />
-                ))
-              ) : (
-                <p>No articles found</p>
-              )}
-            </div>
+          <div className="article-list">
+            {articles.length > 0 ? (
+              articles.map((article, index) => (
+                <ArticleCard key={index} article={article} />
+              ))
+            ) : (
+              <p>No articles found</p>
+            )}
+          </div>
         </div>
       )}
     </div>

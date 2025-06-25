@@ -1,7 +1,7 @@
-import  { useState } from "react";
+import { useState } from "react";
 import "./index.css";
 
-const categories = [
+const CATEGORIES = [
   "General",
   "Business",
   "Entertainment",
@@ -11,42 +11,69 @@ const categories = [
   "Technology",
 ];
 
+const SOURCES = [
+  { value: "", label: "All Sources" },
+  { value: "newsapi", label: "NewsAPI" },
+  { value: "guardian", label: "The Guardian" },
+  { value: "nytimes", label: "The New York Times" },
+];
+
 const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = useState("");
-  const [date, setDate] = useState("");
-  const [category, setCategory] = useState("");
-  const [source, setSource] = useState("");
+  const [fields, setFields] = useState({
+    query: "",
+    date: "",
+    category: "",
+    source: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFields((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSearch = () => {
-    onSearch({ query, date, category, source });
-  };  
+    onSearch(fields);
+  };
+
+  const { query, date, category, source } = fields;
 
   return (
-    <div className='search-bar'>
+    <div className="search-bar">
       <input
-        type='text'
-        placeholder='Search...'
+        type="text"
+        name="query"
+        placeholder="Search..."
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={handleChange}
       />
       <input
-        type='date'
+        type="date"
+        name="date"
         value={date}
-        onChange={(e) => setDate(e.target.value)}
+        onChange={handleChange}
       />
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
-        <option value=''>All Categories</option>
-        {categories.map((cat) => (
+      <select
+        name="category"
+        value={category}
+        onChange={handleChange}
+      >
+        <option value="">All Categories</option>
+        {CATEGORIES.map((cat) => (
           <option key={cat} value={cat}>
             {cat}
           </option>
         ))}
       </select>
-      <select value={source} onChange={(e) => setSource(e.target.value)}>
-        <option value=''>All Sources</option>
-        <option value='newsapi'>NewsAPI</option>
-        <option value='guardian'>The Guardian</option>
-        <option value='nytimes'>The New York Times</option>
+      <select
+        name="source"
+        value={source}
+        onChange={handleChange}
+      >
+        {SOURCES.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
       </select>
       <button onClick={handleSearch}>Search</button>
     </div>
