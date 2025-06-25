@@ -1,8 +1,8 @@
 import axios from "axios";
 const BASE_URL = "https://content.guardianapis.com/search";
+const GUARDIAN_API_KEY = import.meta.env.VITE_GUARDIAN_API_KEY;
 
 export const fetchGuardianArticles = async (query, date, category) => {
-  const GUARDIAN_API_KEY = import.meta.env.VITE_GUARDIAN_API_KEY;
   try {
     const params = {
       q: query || "",

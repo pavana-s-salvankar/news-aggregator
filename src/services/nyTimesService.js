@@ -1,8 +1,6 @@
 import axios from "axios";
-
 const BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-
-const getApiKey = () => import.meta.env.VITE_NYTIMES_API_KEY;
+const getApiKey = import.meta.env.VITE_NYTIMES_API_KEY;
 
 const buildParams = (query, date, category, apiKey) => ({
   q: query || "",
