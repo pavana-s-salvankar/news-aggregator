@@ -37,6 +37,12 @@ const SearchBar = ({ onSearch }) => {
 
   const { query, date, category, source } = fields;
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="search-bar">
       <input
@@ -45,17 +51,20 @@ const SearchBar = ({ onSearch }) => {
         placeholder="Search..."
         value={query}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
       />
       <input
         type="date"
         name="date"
         value={date}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
       />
       <select
         name="category"
         value={category}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
       >
         <option value="">All Categories</option>
         {CATEGORIES.map((cat) => (
@@ -68,6 +77,7 @@ const SearchBar = ({ onSearch }) => {
         name="source"
         value={source}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
       >
         {SOURCES.map(({ value, label }) => (
           <option key={value} value={value}>
