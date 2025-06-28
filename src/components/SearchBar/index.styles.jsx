@@ -30,16 +30,12 @@ export const SearchSelect = styled.select`
   border-radius: 5px;
 `;
 
-export const SearchButton = styled.button`
-  flex: 1;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 5px;
+export const Button = styled.button`
+  border-radius: 15px;
+  padding: 6px 8px;
   background-color: #007bff;
-  color: white;
   border: none;
   cursor: pointer;
-
   &:hover {
     background-color: #0056b3;
   }
@@ -59,6 +55,12 @@ export const ArticleList = styled.div`
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
+`;
+
+export const SettingsIcon = styled.img`
+  margin-top: 5px;
+  height: 20px;
+  width: 20px;
 `;
 
 export const Option = styled.option``;

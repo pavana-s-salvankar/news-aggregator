@@ -2,35 +2,25 @@ import { useState } from "react";
 import {
   Option,
   SearchBarContainer,
-  SearchButton,
+  Button,
   SearchInput,
   SearchSelect,
+  SettingsIcon,
 } from "./index.styles.jsx";
+import SettingsModal from "../SettingsModal/index.jsx";
+import { CATEGORIES, SOURCES } from "../../constants.js";
+import settingsIcon from "../../assets/images/settings.png";
+import resetIcon from "../../assets/images/refresh.png";
+import searchButtomn from "../../assets/images/search.png";
 
-const CATEGORIES = [
-  "General",
-  "Business",
-  "Entertainment",
-  "Health",
-  "Science",
-  "Sports",
-  "Technology",
-];
-
-const SOURCES = [
-  { value: "", label: "All Sources" },
-  { value: "newsapi", label: "NewsAPI" },
-  { value: "guardian", label: "The Guardian" },
-  { value: "nytimes", label: "The New York Times" },
-];
-
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, resetFilters }) => {
   const [fields, setFields] = useState({
     query: "",
     date: "",
     category: "",
     source: "",
   });
+  const [showSettings, setShowSettings] = useState(false);
 
   const handleChange = (e, autoSearch = false) => {
     const { name, value } = e.target;
@@ -43,7 +33,7 @@ const SearchBar = ({ onSearch }) => {
     });
   };
 
-  const handleSearch = (e,fieldsOverride) => {
+  const handleSearch = (e, fieldsOverride) => {
     e.preventDefault();
     onSearch(fieldsOverride || fields);
   };
@@ -52,13 +42,6 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <SearchBarContainer className="search-bar">
-      <SearchInput
-        type="text"
-        name="query"
-        placeholder="Search..."
-        value={query}
-        onChange={handleChange}
-      />
       <SearchInput
         type="date"
         name="date"
@@ -88,7 +71,32 @@ const SearchBar = ({ onSearch }) => {
           </Option>
         ))}
       </SearchSelect>
-      <SearchButton onClick={(e) => handleSearch(e)}>Search</SearchButton>
+      <SearchInput
+        type="text"
+        name="query"
+        placeholder="Search..."
+        value={query}
+        onChange={handleChange}
+      />
+      <Button onClick={(e) => handleSearch(e)}>
+        <SettingsIcon src={searchButtomn} alt="Settings" />
+      </Button>
+      <Button
+        type="button"
+        onClick={() => setShowSettings(true)}
+        aria-label="Settings"
+      >
+        <SettingsIcon src={settingsIcon} alt="Settings" />
+      </Button>
+      {showSettings && (
+        <SettingsModal
+          open={showSettings}
+          onClose={() => setShowSettings(false)}
+        />
+      )}
+      <Button type="button" onClick={resetFilters} aria-label="Reset Filters">
+        <SettingsIcon src={resetIcon} alt="Settings" />
+      </Button>
     </SearchBarContainer>
   );
 };

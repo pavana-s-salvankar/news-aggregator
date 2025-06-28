@@ -72,10 +72,17 @@ const Home = () => {
   const handleSearch = (searchParams) => {
     setFilters(searchParams);
   };
-
+const resetFilters = () => {
+    setFilters({
+      query: "",
+      date: "",
+      category: "",
+      source: "",
+    });
+  };
   return (
     <HomeContainer>
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar onSearch={handleSearch} resetFilters={resetFilters}/>
        {loading ? (
         <LoadingContainer >
           <LoadingSpinner ></LoadingSpinner>
