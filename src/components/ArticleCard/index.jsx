@@ -22,7 +22,6 @@ const ArticleCard = ({ article }) => {
     <ArticleCardContainer>
       <ArticleImage
         src={imageUrl || defaultPlaceholderImage}
-        className="article-image"
         alt={title || "Article"}
       />
       <PublishedDate>Published on {formattedDate}</PublishedDate>

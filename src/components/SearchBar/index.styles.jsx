@@ -30,16 +30,11 @@ export const SearchSelect = styled.select`
   border-radius: 5px;
 `;
 
-export const SearchButton = styled.button`
-  flex: 1;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 5px;
+export const Button = styled.button`
+  border-radius: 15px;
   background-color: #007bff;
-  color: white;
   border: none;
   cursor: pointer;
-
   &:hover {
     background-color: #0056b3;
   }
@@ -61,4 +56,21 @@ export const ArticleList = styled.div`
   }
 `;
 
+export const SettingsIcon = styled.img`
+  margin-top: 5px;
+  height: 20px;
+  width: 20px;
+`;
+
 export const Option = styled.option``;
+
+export const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    flex: 100%;
+  }
+`;
