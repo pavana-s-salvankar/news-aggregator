@@ -65,6 +65,7 @@ const SettingsModal = ({ open, onClose, onSave }) => {
       authors,
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(preferences));
+    window.location.reload();
     onSave && onSave(preferences);
     onClose && onClose();
   };

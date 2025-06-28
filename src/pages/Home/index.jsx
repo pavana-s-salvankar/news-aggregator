@@ -28,7 +28,22 @@ const Home = () => {
       setLoading(true);
       try {
         let fetchedArticles = [];
-        const { query, date, category, source } = filters;
+        const { query, date } = filters;
+        // Get preferences from localStorage
+        let preferences = {};
+        try {
+          const prefString = localStorage.getItem("newsAggregatorPreferences");
+          if (prefString) {
+            preferences = JSON.parse(prefString);
+          }
+        } catch (e) {
+          preferences = {};
+        }
+        // Prefer filter values, fallback to preferences
+        const category =
+          filters.category || (preferences.categories && preferences.categories[0]) || "";
+        const source =
+          filters.source || (preferences.sources && preferences.sources.find(s => s)) || "";
 
         switch (source) {
           case "newsapi":
