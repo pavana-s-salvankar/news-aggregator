@@ -1,4 +1,3 @@
-import "./App.css";
 import { PreferencesProvider } from "./context/PreferencesContext";
 import Home from "./pages/Home";
 
