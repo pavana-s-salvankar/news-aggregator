@@ -4,7 +4,14 @@ import SearchBar from "../../components/SearchBar";
 import { fetchGuardianArticles } from "../../services/guardianService";
 import { fetchNewsAPIArticles } from "../../services/newsAPIService";
 import { fetchNYTimesArticles } from "../../services/nyTimesService";
-import "./index.css";
+import {
+  ArticleList,
+  ArticleSection,
+  HomeContainer,
+  LoadingContainer,
+  LoadingSpinner,
+  NoArticles,
+} from "./index.styles.jsx";
 
 const Home = () => {
   const [articles, setArticles] = useState([]);
@@ -28,7 +35,11 @@ const Home = () => {
             fetchedArticles = await fetchNewsAPIArticles(query, date, category);
             break;
           case "guardian":
-            fetchedArticles = await fetchGuardianArticles(query, date, category);
+            fetchedArticles = await fetchGuardianArticles(
+              query,
+              date,
+              category
+            );
             break;
           case "nytimes":
             fetchedArticles = await fetchNYTimesArticles(query, date, category);
@@ -40,6 +51,7 @@ const Home = () => {
               fetchNYTimesArticles(query, date, category),
             ]);
             fetchedArticles = [...news, ...guardian, ...nytimes];
+            console.log("Fetched articles from all sources:", fetchedArticles); 
         }
 
         setArticles(fetchedArticles);
@@ -58,26 +70,26 @@ const Home = () => {
   };
 
   return (
-    <div className="home">
+    <HomeContainer>
       <SearchBar onSearch={handleSearch} />
-      {loading ? (
-        <div className="loading-container">
-          <div className="loading-spinner"></div>
-        </div>
+       {loading ? (
+        <LoadingContainer >
+          <LoadingSpinner ></LoadingSpinner>
+        </LoadingContainer>
       ) : (
-        <div className="article-sections">
-          <div className="article-list">
-            {articles?.length > 0 ? (
-              articles.map((article, index) => (
-                <ArticleCard key={index} article={article} />
-              ))
-            ) : (
-              <p>No articles found</p>
-            )}
-          </div>
-        </div>
+      <ArticleSection>
+        <ArticleList>
+          {articles?.length > 0 ? (
+            articles.map((article, index) => (
+              <ArticleCard key={index} article={article} />
+            ))
+          ) : (
+            !loading && <NoArticles>No articles found</NoArticles>
+          )}
+        </ArticleList>
+      </ArticleSection>
       )}
-    </div>
+    </HomeContainer>
   );
 };
 

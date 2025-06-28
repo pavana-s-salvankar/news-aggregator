@@ -1,5 +1,11 @@
 import { useState } from "react";
-import "./index.css";
+import {
+  Option,
+  SearchBarContainer,
+  SearchButton,
+  SearchInput,
+  SearchSelect,
+} from "./index.styles.jsx";
 
 const CATEGORIES = [
   "General",
@@ -44,8 +50,8 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="search-bar">
-      <input
+    <SearchBarContainer className="search-bar">
+      <SearchInput
         type="text"
         name="query"
         placeholder="Search..."
@@ -53,40 +59,40 @@ const SearchBar = ({ onSearch }) => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      <input
+      <SearchInput
         type="date"
         name="date"
         value={date}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      <select
+      <SearchSelect
         name="category"
         value={category}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       >
-        <option value="">All Categories</option>
-        {CATEGORIES.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
-          </option>
+        <Option value="">All Categories</Option>
+        {CATEGORIES.map((category) => (
+          <Option key={category} value={category}>
+            {category}
+          </Option>
         ))}
-      </select>
-      <select
+      </SearchSelect>
+      <SearchSelect
         name="source"
         value={source}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       >
         {SOURCES.map(({ value, label }) => (
-          <option key={value} value={value}>
+          <Option key={value} value={value}>
             {label}
-          </option>
+          </Option>
         ))}
-      </select>
-      <button onClick={handleSearch}>Search</button>
-    </div>
+      </SearchSelect>
+      <SearchButton onClick={handleSearch}>Search</SearchButton>
+    </SearchBarContainer>
   );
 };
 
