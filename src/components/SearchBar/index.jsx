@@ -37,7 +37,8 @@ const SearchBar = ({ onSearch }) => {
     setFields((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     onSearch(fields);
   };
 
