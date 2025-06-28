@@ -50,7 +50,11 @@ const Home = () => {
               fetchGuardianArticles(query, date, category),
               fetchNYTimesArticles(query, date, category),
             ]);
-            fetchedArticles = [...news, ...guardian, ...nytimes];
+            fetchedArticles = [
+              ...(Array.isArray(news) ? news : []),
+              ...(Array.isArray(guardian) ? guardian : []),
+              ...(Array.isArray(nytimes) ? nytimes : []),
+            ];
             console.log("Fetched articles from all sources:", fetchedArticles); 
         }
 

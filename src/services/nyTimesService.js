@@ -2,7 +2,7 @@ import axios from "axios";
 const BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
 const NYTIMES_API_KEY = import.meta.env.VITE_NYTIMES_API_KEY;
 
-const buildParams = (query, date, category, NYTIMES_API_KEY) => ({
+const buildParams = (query, date, category) => ({
   q: query || "",
   "api-key": NYTIMES_API_KEY,
   ...(date && { begin_date: date.replace(/-/g, "") }),
@@ -29,7 +29,7 @@ export const fetchNYTimesArticles = async (query, date, category) => {
 
   try {
     const response = await axios.get(BASE_URL, {
-      params: buildParams(query, date, category, NYTIMES_API_KEY),
+      params: buildParams(query, date, category),
     });
     return response?.data?.response?.docs?.map(mapArticle);
   } catch (error) {
