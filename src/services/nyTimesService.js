@@ -31,7 +31,7 @@ export const fetchNYTimesArticles = async (query, date, category) => {
     const response = await axios.get(BASE_URL, {
       params: buildParams(query, date, category, NYTIMES_API_KEY),
     });
-    return response.data.response.docs.map(mapArticle);
+    return response?.data?.response?.docs?.map(mapArticle);
   } catch (error) {
     if (error.response) {
       console.error(

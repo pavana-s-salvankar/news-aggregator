@@ -67,7 +67,7 @@ const Home = () => {
       ) : (
         <div className="article-sections">
           <div className="article-list">
-            {articles.length > 0 ? (
+            {articles?.length > 0 ? (
               articles.map((article, index) => (
                 <ArticleCard key={index} article={article} />
               ))
