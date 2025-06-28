@@ -87,33 +87,26 @@ const Home = () => {
   const handleSearch = (searchParams) => {
     setFilters(searchParams);
   };
-const resetFilters = () => {
-    setFilters({
-      query: "",
-      date: "",
-      category: "",
-      source: "",
-    });
+  const resetFilters = () => {
+    window.location.reload();
   };
   return (
     <HomeContainer>
-      <SearchBar onSearch={handleSearch} resetFilters={resetFilters}/>
-       {loading ? (
-        <LoadingContainer >
-          <LoadingSpinner ></LoadingSpinner>
+      <SearchBar onSearch={handleSearch} resetFilters={resetFilters} />
+      {loading ? (
+        <LoadingContainer>
+          <LoadingSpinner></LoadingSpinner>
         </LoadingContainer>
       ) : (
-      <ArticleSection>
-        <ArticleList>
-          {articles?.length > 0 ? (
-            articles.map((article, index) => (
-              <ArticleCard key={index} article={article} />
-            ))
-          ) : (
-            !loading && <NoArticles>No articles found</NoArticles>
-          )}
-        </ArticleList>
-      </ArticleSection>
+        <ArticleSection>
+          <ArticleList>
+            {articles?.length > 0
+              ? articles.map((article, index) => (
+                  <ArticleCard key={index} article={article} />
+                ))
+              : !loading && <NoArticles>No articles found</NoArticles>}
+          </ArticleList>
+        </ArticleSection>
       )}
     </HomeContainer>
   );
