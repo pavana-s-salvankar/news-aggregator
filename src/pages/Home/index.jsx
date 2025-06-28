@@ -45,32 +45,39 @@ const Home = () => {
         const source =
           filters.source || (preferences.sources && preferences.sources.find(s => s)) || "";
 
-        switch (source) {
-          case "newsapi":
-            fetchedArticles = await fetchNewsAPIArticles(query, date, category);
-            break;
-          case "guardian":
-            fetchedArticles = await fetchGuardianArticles(
-              query,
-              date,
-              category
-            );
-            break;
-          case "nytimes":
-            fetchedArticles = await fetchNYTimesArticles(query, date, category);
-            break;
-          default:
-            const [news, guardian, nytimes] = await Promise.all([
-              fetchNewsAPIArticles(query, date, category),
-              fetchGuardianArticles(query, date, category),
-              fetchNYTimesArticles(query, date, category),
-            ]);
-            fetchedArticles = [
-              ...(Array.isArray(news) ? news : []),
-              ...(Array.isArray(guardian) ? guardian : []),
-              ...(Array.isArray(nytimes) ? nytimes : []),
-            ];
-            console.log("Fetched articles from all sources:", fetchedArticles); 
+        // sources can be an array, fallback to all if empty
+        const sources =
+          (filters.source
+            ? Array.isArray(filters.source)
+              ? filters.source
+              : [filters.source]
+            : preferences.sources && Array.isArray(preferences.sources)
+            ? preferences.sources
+            : ["newsapi", "guardian", "nytimes"]
+          ).filter(Boolean);
+
+        fetchedArticles = [];
+        for (const src of sources.length ? sources : ["newsapi", "guardian", "nytimes"]) {
+          switch (src) {
+            case "newsapi":
+              fetchedArticles.push(
+          ...(await fetchNewsAPIArticles(query, date, category) || [])
+              );
+              break;
+            case "guardian":
+              fetchedArticles.push(
+          ...(await fetchGuardianArticles(query, date, category) || [])
+              );
+              break;
+            case "nytimes":
+              fetchedArticles.push(
+          ...(await fetchNYTimesArticles(query, date, category) || [])
+              );
+              break;
+            default:
+              // ignore unknown sources
+              break;
+          }
         }
 
         setArticles(fetchedArticles);

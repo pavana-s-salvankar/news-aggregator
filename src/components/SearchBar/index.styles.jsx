@@ -32,7 +32,6 @@ export const SearchSelect = styled.select`
 
 export const Button = styled.button`
   border-radius: 15px;
-  padding: 6px 8px;
   background-color: #007bff;
   border: none;
   cursor: pointer;
@@ -64,3 +63,14 @@ export const SettingsIcon = styled.img`
 `;
 
 export const Option = styled.option``;
+
+export const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    flex: 100%;
+  }
+`;

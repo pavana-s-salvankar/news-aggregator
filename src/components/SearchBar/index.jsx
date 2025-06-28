@@ -6,6 +6,7 @@ import {
   SearchInput,
   SearchSelect,
   SettingsIcon,
+  Wrapper
 } from "./index.styles.jsx";
 import SettingsModal from "../SettingsModal/index.jsx";
 import { CATEGORIES, SOURCES } from "../../constants.js";
@@ -71,6 +72,7 @@ const SearchBar = ({ onSearch, resetFilters }) => {
           </Option>
         ))}
       </SearchSelect>
+      <Wrapper>
       <SearchInput
         type="text"
         name="query"
@@ -97,6 +99,7 @@ const SearchBar = ({ onSearch, resetFilters }) => {
       <Button type="button" onClick={resetFilters} aria-label="Reset Filters">
         <SettingsIcon src={resetIcon} alt="Settings" />
       </Button>
+      </Wrapper>
     </SearchBarContainer>
   );
 };
