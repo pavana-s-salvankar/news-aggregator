@@ -32,23 +32,23 @@ const SearchBar = ({ onSearch }) => {
     source: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e, autoSearch = false) => {
     const { name, value } = e.target;
-    setFields((prev) => ({ ...prev, [name]: value }));
+    setFields((prev) => {
+      const updated = { ...prev, [name]: value };
+      if (autoSearch) {
+        onSearch(updated);
+      }
+      return updated;
+    });
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = (e,fieldsOverride) => {
     e.preventDefault();
-    onSearch(fields);
+    onSearch(fieldsOverride || fields);
   };
 
   const { query, date, category, source } = fields;
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
 
   return (
     <SearchBarContainer className="search-bar">
@@ -58,20 +58,17 @@ const SearchBar = ({ onSearch }) => {
         placeholder="Search..."
         value={query}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
       />
       <SearchInput
         type="date"
         name="date"
         value={date}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        onChange={(e) => handleChange(e, true)}
       />
       <SearchSelect
         name="category"
         value={category}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        onChange={(e) => handleChange(e, true)}
       >
         <Option value="">All Categories</Option>
         {CATEGORIES.map((category) => (
@@ -83,8 +80,7 @@ const SearchBar = ({ onSearch }) => {
       <SearchSelect
         name="source"
         value={source}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        onChange={(e) => handleChange(e, true)}
       >
         {SOURCES.map(({ value, label }) => (
           <Option key={value} value={value}>
@@ -92,7 +88,7 @@ const SearchBar = ({ onSearch }) => {
           </Option>
         ))}
       </SearchSelect>
-      <SearchButton onClick={handleSearch}>Search</SearchButton>
+      <SearchButton onClick={(e) => handleSearch(e)}>Search</SearchButton>
     </SearchBarContainer>
   );
 };
