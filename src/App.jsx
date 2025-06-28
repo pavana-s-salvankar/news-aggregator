@@ -1,10 +1,5 @@
-import { PreferencesProvider } from "./context/PreferencesContext";
 import Home from "./pages/Home";
 
-const App = () => (
-  <PreferencesProvider>
-    <Home />
-  </PreferencesProvider>
-);
+const App = () => <Home />;
 
 export default App;
