@@ -37,6 +37,9 @@ npm install
 npm run dev
 ```
 
+<img width="1179" alt="Screenshot 2025-06-29 at 10 32 17 AM" src="https://github.com/user-attachments/assets/9ac13a49-f2f2-42cb-8e7a-b8f268b724bd" />
+
+<img width="1243" alt="Screenshot 2025-06-29 at 10 32 46 AM" src="https://github.com/user-attachments/assets/299eef2f-17b6-4948-b119-b9b62beb4a27" />
 
 
 
