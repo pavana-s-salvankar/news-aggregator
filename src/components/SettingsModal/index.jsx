@@ -19,8 +19,8 @@ import { CATEGORIES, SOURCES } from "../../constants";
 const LOCAL_STORAGE_KEY = "newsAggregatorPreferences";
 
 const SettingsModal = ({ open, onClose, onSave }) => {
-  const [selectedSources, setSelectedSources] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedSource, setSelectedSource] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [authors, setAuthors] = useState([]);
   const [newAuthor, setNewAuthor] = useState("");
 
@@ -30,19 +30,18 @@ const SettingsModal = ({ open, onClose, onSave }) => {
       if (stored) {
         try {
           const prefs = JSON.parse(stored);
-          setSelectedSources(prefs.sources || []);
-          setSelectedCategories(prefs.categories || []);
+          setSelectedSource(prefs.source || "");
+          setSelectedCategory(prefs.category || "");
           setAuthors(prefs.authors || []);
         } catch {}
       }
     }
   }, [open]);
 
-  const toggleSelection = (e, item, list, setList) => {
+  const toggleSelection = (e, item, selected, setSelected) => {
     e.preventDefault();
-    setList(
-      list.includes(item) ? list.filter((i) => i !== item) : [...list, item]
-    );
+    setSelected(selected === item ? "" : item);
+    console.log(selectedCategory, selectedSource);
   };
 
   const addAuthor = (e) => {
@@ -60,8 +59,8 @@ const SettingsModal = ({ open, onClose, onSave }) => {
 
   const handleSave = () => {
     const preferences = {
-      sources: selectedSources,
-      categories: selectedCategories,
+      source: selectedSource,
+      category: selectedCategory,
       authors,
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(preferences));
@@ -86,9 +85,9 @@ const SettingsModal = ({ open, onClose, onSave }) => {
             <TagButton
               key={value}
               onClick={(e) =>
-                toggleSelection(e, value, selectedSources, setSelectedSources)
+                toggleSelection(e, value, selectedSource, setSelectedSource)
               }
-              selected={selectedSources.includes(value)}
+              selected={selectedSource === value}
             >
               {label}
             </TagButton>
@@ -97,20 +96,15 @@ const SettingsModal = ({ open, onClose, onSave }) => {
 
         <Section>
           <Label>Preferred Categories</Label>
-          {CATEGORIES.map((category) => (
+          {CATEGORIES.map(({ value, label }) => (
             <TagButton
-              key={category}
+              key={value}
               onClick={(e) =>
-                toggleSelection(
-                  e,
-                  category,
-                  selectedCategories,
-                  setSelectedCategories
-                )
+                toggleSelection(e, value, selectedCategory, setSelectedCategory)
               }
-              selected={selectedCategories.includes(category)}
+              selected={selectedCategory === value}
             >
-              {category}
+              {label}
             </TagButton>
           ))}
         </Section>

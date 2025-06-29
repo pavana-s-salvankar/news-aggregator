@@ -54,10 +54,9 @@ const SearchBar = ({ onSearch, resetFilters }) => {
         value={category}
         onChange={(e) => handleChange(e, true)}
       >
-        <Option value="">All Categories</Option>
-        {CATEGORIES.map((category) => (
-          <Option key={category} value={category}>
-            {category}
+        {CATEGORIES.map(({ value, label }) => (
+          <Option key={value} value={value}>
+            {label}
           </Option>
         ))}
       </SearchSelect>

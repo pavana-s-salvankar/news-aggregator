@@ -5,8 +5,8 @@ const GUARDIAN_API_KEY = import.meta.env.VITE_GUARDIAN_API_KEY;
 export const fetchGuardianArticles = async (query, date, category) => {
   try {
     const params = {
-      q: query || "",
       "api-key": GUARDIAN_API_KEY,
+      ...(query && { q: query }),
       ...(date && { "from-date": date }),
       ...(category && { section: category }),
       showFields: "headline,trailText",

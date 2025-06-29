@@ -1,13 +1,18 @@
 import axios from "axios";
-const BASE_URL = "https://newsapi.org/v2/everything";
+const BASE_URL = "https://newsapi.org/v2/top-headlines";
 const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 
-export const fetchNewsAPIArticles = async (query = "", date, category = "") => {
-  if (query == "") query = "*";
+export const fetchNewsAPIArticles = async (
+  query = "",
+  date,
+  category = "",
+  source = ""
+) => {
   try {
     const params = {
-      q: query,
-      category,
+      ...(query && { q: query }),
+      ...(category && { category }),
+      ...(source && { sources: source }),
       apiKey: NEWS_API_KEY,
       language: "en",
       ...(date && { from: date }),
