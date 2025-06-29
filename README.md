@@ -52,12 +52,11 @@ docker run -p 4173:4173 news-app:v1
 
 <img width="1792" alt="Screenshot 2025-06-29 at 3 38 49 PM" src="https://github.com/user-attachments/assets/db577687-fcab-4858-b930-65e6ddf3efe3" />
 
-
 <img width="1780" alt="Screenshot 2025-06-29 at 3 38 24 PM" src="https://github.com/user-attachments/assets/aeea553d-bb70-4d6c-84ce-34ed46f3c478" />
 
-
-
-
+<div align="center">
+<img width="464" alt="Screenshot 2025-06-29 at 4 16 25 PM" src="https://github.com/user-attachments/assets/552eb58b-97ed-47b4-9973-613f6497b722" />
+</div>
 
 
 
