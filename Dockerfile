@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 4173
 
 # Start the app using Vite preview
-CMD ["sh", "-c", "npm run preview -- --port 4173 --host"]
+CMD ["npm", "run", "preview:docker"]
