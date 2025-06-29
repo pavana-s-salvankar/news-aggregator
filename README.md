@@ -1,11 +1,6 @@
 # 📰 News Aggregator  
 A modern ReactJS-based web application that aggregates news from multiple sources.
 
-## ✨ Features  
-- 🔍 Article search and filtering  
-- 🧠 Personalized news feed  
-- 📱 Mobile-responsive design  
-
 ## 🚀 Getting Started
 
 ### 📦 Requirements  
@@ -48,11 +43,16 @@ docker build -t news-app:v1 .
 docker run -p 4173:4173 news-app:v1
 ```
 
-## User Interface Overview
+## ✨ Features  
+### 🔍 Article search and filtering  
 
-<img width="1792" alt="Screenshot 2025-06-29 at 3 38 49 PM" src="https://github.com/user-attachments/assets/db577687-fcab-4858-b930-65e6ddf3efe3" />
+https://github.com/user-attachments/assets/da121813-2f4e-4303-acfd-551555ba3986
 
-<img width="1780" alt="Screenshot 2025-06-29 at 3 38 24 PM" src="https://github.com/user-attachments/assets/aeea553d-bb70-4d6c-84ce-34ed46f3c478" />
+### 🧠 Personalized news feed  
+
+https://github.com/user-attachments/assets/6ab2f06a-5ec6-4f27-885f-86441b988250
+
+### 📱 Mobile-responsive design  
 
 <div align="center">
 <img width="464" alt="Screenshot 2025-06-29 at 4 16 25 PM" src="https://github.com/user-attachments/assets/552eb58b-97ed-47b4-9973-613f6497b722" />
