@@ -2,7 +2,7 @@
 FROM node:22
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /application
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -16,8 +16,8 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Expose port 3000
-EXPOSE 3000
+# Expose port 4173 (Vite preview default)
+EXPOSE 4173
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["npm", "run", "preview"]
