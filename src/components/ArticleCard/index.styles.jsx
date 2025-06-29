@@ -27,7 +27,7 @@ export const ArticleImage = styled.img`
 export const ArticleTitle = styled.h3`
   font-size: 18px;
   font-weight: bold;
-  margin: 10px 0;
+  margin: 5px 0;
   text-align: left;
   width: 100%;
   overflow: hidden;
@@ -39,7 +39,7 @@ export const ArticleDescription = styled.p`
   font-size: 14px;
   color: #666;
   text-align: left;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -60,6 +60,7 @@ export const ArticleLink = styled.a`
 export const ArticleMeta = styled.p`
   font-size: 12px;
   color: #999;
+  margin: 5px 0;
 `;
 
 export const PublishedDate = styled.p`

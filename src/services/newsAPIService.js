@@ -21,13 +21,22 @@ export const fetchNewsAPIArticles = async (query = "", date, category = "") => {
       data.articles.length
     ) {
       return data.articles.map(
-        ({ title, description, url, urlToImage, publishedAt, source }) => ({
+        ({
+          title,
+          description,
+          url,
+          urlToImage,
+          publishedAt,
+          source,
+          author,
+        }) => ({
           title,
           description,
           url,
           imageUrl: urlToImage,
           publishedAt,
           source: source?.name,
+          author: author || "Unknown",
         })
       );
     }

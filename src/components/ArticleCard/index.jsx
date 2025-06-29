@@ -12,7 +12,8 @@ import {
 const ArticleCard = ({ article }) => {
   if (!article) return null;
 
-  const { imageUrl, title, description, source, url, publishedAt } = article;
+  const { imageUrl, title, description, source, url, publishedAt, author } =
+    article;
 
   const formattedDate = publishedAt
     ? new Date(publishedAt).toLocaleDateString()
@@ -28,6 +29,7 @@ const ArticleCard = ({ article }) => {
       <ArticleTitle>{title}</ArticleTitle>
       {description && <ArticleDescription>{description}</ArticleDescription>}
       <ArticleMeta>Source: {source || "Unknown"}</ArticleMeta>
+      <ArticleMeta>Author: {author || "Unknown"}</ArticleMeta>
       {url && (
         <ArticleLink href={url} target="_blank" rel="noopener noreferrer">
           Read More
